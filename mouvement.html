@@ -108,9 +108,9 @@
         if (document.querySelector('input[name="q9"]:checked')?.value === "b") score++;
         if (document.querySelector('input[name="q10"]:checked')?.value === "c") score++;
 
-        let resultText = "Tu as " + score + "/10 bonnes réponses.\n\n";
+        let resultText = "Tu as " + score + "/10 bonnes réponses.\\n\\n";
         for (let i = 0; i < explanations.length; i++) {
-          resultText += explanations[i] + "\n";
+          resultText += explanations[i] + "\\n";
         }
         document.getElementById("resultat").innerText = resultText;
 
@@ -137,3 +137,4 @@
   </main>
 </body>
 </html>
+
