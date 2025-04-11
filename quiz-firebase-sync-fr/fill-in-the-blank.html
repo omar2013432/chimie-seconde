@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><title>fill-in-the-blank.html</title></head><body><h1>Fill in the Blank</h1><p>Quiz content here</p><br><a href='index.html'>⬅ Back to Home</a>
+<script>
+  function toggleTheme() {
+    const currentTheme = localStorage.getItem("theme") || "light";
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    document.getElementById("theme-style").href = nextTheme === "dark" ? "style-dark.css" : "style.css";
+    localStorage.setItem("theme", nextTheme);
+  }
+
+  window.onload = () => {
+    const saved = localStorage.getItem("theme") || "light";
+    document.getElementById("theme-style").href = saved === "dark" ? "style-dark.css" : "style.css";
+  };
+</script>
+<button onclick="toggleTheme()" style="position:fixed;top:10px;right:10px;z-index:1000;">🌓 Thème</button>
+
+</body></html>

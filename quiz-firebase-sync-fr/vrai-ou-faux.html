@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<title>Vrai ou Faux – Le mouvement</title>
+<link href="style.css" id="theme-style" rel="stylesheet"/>
+</head>
+<body>
+<h1>Vrai ou Faux : Le mouvement</h1>
+<form id="vfForm">
+<label for="prenom">Entrez votre prénom : <input id="prenom" type="text"/></label><br/><br/>
+<p><strong>1. Un objet immobile a une vitesse nulle.</strong><br/>
+<input name="q1" type="radio" value="vrai"/> Vrai
+    <input name="q1" type="radio" value="faux"/> Faux</p>
+<p><strong>2. La trajectoire d’un satellite est rectiligne.</strong><br/>
+<input name="q2" type="radio" value="vrai"/> Vrai
+    <input name="q2" type="radio" value="faux"/> Faux</p>
+<p><strong>3. Une vitesse constante signifie qu’il y a une accélération.</strong><br/>
+<input name="q3" type="radio" value="vrai"/> Vrai
+    <input name="q3" type="radio" value="faux"/> Faux</p>
+<p><strong>4. La vitesse se mesure en m/s dans le système international.</strong><br/>
+<input name="q4" type="radio" value="vrai"/> Vrai
+    <input name="q4" type="radio" value="faux"/> Faux</p>
+<p><strong>5. En chute libre, la vitesse diminue.</strong><br/>
+<input name="q5" type="radio" value="vrai"/> Vrai
+    <input name="q5" type="radio" value="faux"/> Faux</p>
+<button onclick="verifier()" type="button">Vérifier mes réponses</button>
+</form>
+<p id="resultat"></p>
+<script>
+    function verifier() {
+      let score = 0;
+      const reponses = ["vrai", "faux", "faux", "vrai", "faux"];
+      const explications = [
+        "1. ✅ Vrai. Un objet immobile ne bouge pas, donc sa vitesse est 0.",
+        "2. ❌ Faux. Un satellite suit une trajectoire circulaire ou elliptique.",
+        "3. ❌ Faux. Une vitesse constante signifie qu'il n’y a pas d’accélération.",
+        "4. ✅ Vrai. L’unité SI de la vitesse est bien mètre par seconde (m/s).",
+        "5. ❌ Faux. En chute libre, la vitesse augmente à cause de la gravité."
+      ];
+
+      for (let i = 1; i <= 5; i++) {
+        const selected = document.querySelector('input[name="q' + i + '"]:checked');
+        if (selected && selected.value === reponses[i - 1]) score++;
+      }
+
+      let result = "👤 " + (document.getElementById("prenom").value || "Anonyme") + "\n";
+      result += "Score : " + score + "/5\n\n";
+      for (let exp of explications) result += exp + "\n";
+      document.getElementById("resultat").innerText = result;
+const name = document.getElementById("prenom").value || "Anonyme";
+enregistrerScore("vrai-ou-faux", name, score);
+chargerLeaderboard("vrai-ou-faux", "leaderboard-list");
+    }
+  </script>
+<br/><a href="index.html">⬅ Retour au menu</a>
+<script>
+  function toggleTheme() {
+    const currentTheme = localStorage.getItem("theme") || "light";
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    document.getElementById("theme-style").href = nextTheme === "dark" ? "style-dark.css" : "style.css";
+    localStorage.setItem("theme", nextTheme);
+  }
+
+  window.onload = () => {
+    const saved = localStorage.getItem("theme") || "light";
+    document.getElementById("theme-style").href = saved === "dark" ? "style-dark.css" : "style.css";
+  };
+</script>
+<button onclick="toggleTheme()" style="position:fixed;top:10px;right:10px;z-index:1000;">🌓 Thème</button>
+<section id="leaderboard"><h2>🏆 Classement</h2><ul id="leaderboard-list"></ul></section>
+<!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+<script>
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDf-W-nLHER9fZf6AgNRt2htXNQnKtutOk",
+    authDomain: "score-17635.firebaseapp.com",
+    databaseURL: "https://score-17635-default-rtdb.firebaseio.com",
+    projectId: "score-17635",
+    storageBucket: "score-17635.firebasestorage.app",
+    messagingSenderId: "641954592562",
+    appId: "1:641954592562:web:fc7b108f5fd34a4af3492b",
+    measurementId: "G-YLGLR5L9LW"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  function enregistrerScore(quizName, name, score) {
+    const entry = {
+      name: name,
+      score: score
+    };
+    db.ref(quizName).push(entry);
+  }
+
+  function chargerLeaderboard(quizName, elementId) {
+    const leaderboardList = document.getElementById(elementId);
+    leaderboardList.innerHTML = "";
+    db.ref(quizName).orderByChild("score").limitToLast(10).once("value", snapshot => {
+      const scores = [];
+      snapshot.forEach(child => scores.unshift(child.val()));
+      for (const entry of scores) {
+        const li = document.createElement("li");
+        li.textContent = entry.name + " : " + entry.score + "/5";
+        leaderboardList.appendChild(li);
+      }
+    });
+  }
+</script>
+</body>
+</html>
