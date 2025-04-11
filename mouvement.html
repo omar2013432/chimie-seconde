@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapitre 2 - Le mouvement</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Chapitre 2 : Le mouvement</h1>
+    <a href="index.html">⬅ Retour à l'accueil</a>
+  </header>
+
+  <main>
+    <section>
+      <p>Le mouvement est la variation de position d’un objet dans le temps. Il dépend de la trajectoire, de la vitesse et de la durée.</p>
+      <p>Exemples : Mouvement rectiligne, circulaire, accéléré ou uniforme.</p>
+    </section>
+
+    <section id="quiz">
+      <h2>Quiz</h2>
+      <p><strong>Quel mouvement suit un objet à vitesse constante sur une ligne droite ?</strong></p>
+      <input type="radio" name="q2" value="a"> Circulaire<br>
+      <input type="radio" name="q2" value="b"> Rectiligne uniforme<br>
+      <input type="radio" name="q2" value="c"> Accéléré<br><br>
+      <button onclick="verifier()">Vérifier</button>
+      <p id="resultat"></p>
+    </section>
+  </main>
+
+  <script>
+    function verifier() {
+      const reponse = document.querySelector('input[name="q2"]:checked');
+      if (reponse && reponse.value === "b") {
+        document.getElementById("resultat").innerText = "✅ Bonne réponse !";
+      } else {
+        document.getElementById("resultat").innerText = "❌ Mauvaise réponse.";
+      }
+    }
+  </script>
+</body>
+</html>

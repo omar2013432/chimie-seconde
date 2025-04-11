@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Chapitre 1 - La mole</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Chapitre 1 : La mole</h1>
+    <a href="index.html">⬅ Retour à l'accueil</a>
+  </header>
+
+  <main>
+    <section>
+      <p>Une mole est une unité de quantité de matière contenant 6,022 × 10²³ entités (atomes, ions, molécules).</p>
+      <p>Exemple : 1 mole de H₂O correspond à 18 g et contient 6,022 × 10²³ molécules d’eau.</p>
+    </section>
+
+    <section id="quiz">
+      <h2>Quiz</h2>
+      <p><strong>Combien d'entités y a-t-il dans une mole ?</strong></p>
+      <input type="radio" name="q1" value="a"> 6,022 × 10²³<br>
+      <input type="radio" name="q1" value="b"> 1 million<br>
+      <input type="radio" name="q1" value="c"> 100<br><br>
+      <button onclick="verifier()">Vérifier</button>
+      <p id="resultat"></p>
+    </section>
+  </main>
+
+  <script>
+    function verifier() {
+      const reponse = document.querySelector('input[name="q1"]:checked');
+      if (reponse && reponse.value === "a") {
+        document.getElementById("resultat").innerText = "✅ Bonne réponse !";
+      } else {
+        document.getElementById("resultat").innerText = "❌ Mauvaise réponse.";
+      }
+    }
+  </script>
+</body>
+</html>
