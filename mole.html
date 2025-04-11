@@ -18,11 +18,10 @@
 
     <section id="quiz">
       <h2>Quiz - La mole</h2>
-      
-    <form id="quizForm1">
-    <label for="username"><strong>Entrez votre prénom :</strong></label><br>
-    <input type="text" id="username" placeholder="Votre prénom..." required><br><br>
-    
+      <form id="quizForm1">
+        <label for="username"><strong>Entrez votre prénom :</strong></label><br>
+        <input type="text" id="username" placeholder="Votre prénom..." required><br><br>
+
         <p><strong>1. Quelle est la valeur du nombre d’Avogadro ?</strong></p>
         <input type="radio" name="q1" value="a"> 6,022 × 10²³<br>
         <input type="radio" name="q1" value="b"> 1,008<br>
@@ -77,12 +76,52 @@
       </form>
       <p id="resultat"></p>
     </section>
-  
+
     <section id="leaderboard">
       <h2>🏆 Classement</h2>
       <ul id="leaderboard-list"></ul>
     </section>
+
     <script>
+      function verifier() {
+        let score = 0;
+        const explanations = [
+          "1. ✅ 6,022 × 10²³ est le nombre d’Avogadro : le nombre d’entités dans une mole.",
+          "2. ✅ mol est l’unité de la quantité de matière.",
+          "3. ✅ La masse molaire d’O₂ est 32 g/mol (2 atomes d’oxygène de 16).",
+          "4. ✅ 1 mol de NaCl contient 1 mol de Na⁺ et 1 mol de Cl⁻ soit 2 × NA ions.",
+          "5. ✅ 36 ÷ 18 = 2 moles.",
+          "6. ✅ n = m / M, soit quantité = masse / masse molaire.",
+          "7. ✅ n = V / Vm → 1 L ÷ 24 = 1/24 mol.",
+          "8. ✅ M(CO₂) = 12 + 16×2 = 44 g/mol.",
+          "9. ✅ 1 mol de CH₄ a 4 atomes d’H par molécule, donc 4 × NA.",
+          "10. ✅ Une mole représente une quantité de matière."
+        ];
+        if (document.querySelector('input[name="q1"]:checked')?.value === "a") score++;
+        if (document.querySelector('input[name="q2"]:checked')?.value === "b") score++;
+        if (document.querySelector('input[name="q3"]:checked')?.value === "b") score++;
+        if (document.querySelector('input[name="q4"]:checked')?.value === "a") score++;
+        if (document.querySelector('input[name="q5"]:checked')?.value === "b") score++;
+        if (document.querySelector('input[name="q6"]:checked')?.value === "b") score++;
+        if (document.querySelector('input[name="q7"]:checked')?.value === "a") score++;
+        if (document.querySelector('input[name="q8"]:checked')?.value === "b") score++;
+        if (document.querySelector('input[name="q9"]:checked')?.value === "b") score++;
+        if (document.querySelector('input[name="q10"]:checked')?.value === "c") score++;
+
+        let resultText = "Tu as " + score + "/10 bonnes réponses.\\n\\n";
+        for (let i = 0; i < explanations.length; i++) {
+          resultText += explanations[i] + "\\n";
+        }
+        document.getElementById("resultat").innerText = resultText;
+
+        const name = document.getElementById("username").value || "Anonyme";
+        const leaderboard = JSON.parse(localStorage.getItem("leaderboard_mole")) || [];
+        leaderboard.push({ name: name, score: score });
+        leaderboard.sort((a, b) => b.score - a.score);
+        localStorage.setItem("leaderboard_mole", JSON.stringify(leaderboard));
+        afficherLeaderboard();
+      }
+
       function afficherLeaderboard() {
         const list = document.getElementById("leaderboard-list");
         list.innerHTML = "";
@@ -93,55 +132,10 @@
           list.appendChild(li);
         }
       }
+
       window.onload = afficherLeaderboard;
     </script>
-    </main>
-
-
-  <script>
-    function verifier() {
-      let score = 0;
-      if (document.querySelector('input[name="q1"]:checked')?.value === "a") score++;
-      if (document.querySelector('input[name="q2"]:checked')?.value === "b") score++;
-      if (document.querySelector('input[name="q3"]:checked')?.value === "b") score++;
-      if (document.querySelector('input[name="q4"]:checked')?.value === "a") score++;
-      if (document.querySelector('input[name="q5"]:checked')?.value === "b") score++;
-      if (document.querySelector('input[name="q6"]:checked')?.value === "b") score++;
-      if (document.querySelector('input[name="q7"]:checked')?.value === "a") score++;
-      if (document.querySelector('input[name="q8"]:checked')?.value === "b") score++;
-      if (document.querySelector('input[name="q9"]:checked')?.value === "b") score++;
-      if (document.querySelector('input[name="q10"]:checked')?.value === "c") score++;
-
-      
-      let explanations = [
-        "1. ✅ 6,022 × 10²³ est le nombre d’Avogadro : le nombre d’entités dans une mole.",
-        "2. ✅ mol est l’unité de la quantité de matière.",
-        "3. ✅ La masse molaire d’O₂ est 32 g/mol (2 atomes d’oxygène de 16).",
-        "4. ✅ 1 mol de NaCl contient 1 mol de Na⁺ et 1 mol de Cl⁻ soit 2 × NA ions.",
-        "5. ✅ 36 ÷ 18 = 2 moles.",
-        "6. ✅ n = m / M, soit quantité = masse / masse molaire.",
-        "7. ✅ n = V / Vm → 1 L ÷ 24 = 1/24 mol.",
-        "8. ✅ M(CO₂) = 12 + 16×2 = 44 g/mol.",
-        "9. ✅ 1 mol de CH₄ a 4 atomes d’H par molécule, donc 4 × NA.",
-        "10. ✅ Une mole représente une quantité de matière."
-      ];
-      let resultText = "Tu as " + score + "/10 bonnes réponses.\n\n";
-      for (let i = 0; i < explanations.length; i++) {
-        resultText += explanations[i] + "\n";
-      }
-      
-      document.getElementById("resultat").innerText = resultText;
-      
-      const name = document.getElementById("username").value || "Anonyme";
-      const leaderboard = JSON.parse(localStorage.getItem("leaderboard_mole")) || [];
-      leaderboard.push({ name: name, score: score });
-      leaderboard.sort((a, b) => b.score - a.score);
-      localStorage.setItem("leaderboard_mole", JSON.stringify(leaderboard));
-
-      afficherLeaderboard();
-    
-    
-    }
-  </script>
+  </main>
 </body>
 </html>
+
