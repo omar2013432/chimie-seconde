@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>QCM – La mole</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>QCM : La mole</h1>
+  <form id="qcmForm">
+    <label><strong>1. Quelle est l’unité de la quantité de matière ?</strong></label><br>
+    <input type="radio" name="q1" value="mol"> mol<br>
+    <input type="radio" name="q1" value="g"> g<br>
+    <input type="radio" name="q1" value="L"> L<br><br>
+
+    <label><strong>2. Quelle est la masse molaire de l’eau H₂O ?</strong></label><br>
+    <input type="radio" name="q2" value="18"> 18 g/mol<br>
+    <input type="radio" name="q2" value="2"> 2 g/mol<br>
+    <input type="radio" name="q2" value="1"> 1 g/mol<br><br>
+
+    <label><strong>3. 1 mole correspond à combien de particules ?</strong></label><br>
+    <input type="radio" name="q3" value="6e23"> 6,022 × 10²³<br>
+    <input type="radio" name="q3" value="1e6"> 1 000 000<br>
+    <input type="radio" name="q3" value="100"> 100<br><br>
+
+    <label><strong>4. La formule n = m / M signifie :</strong></label><br>
+    <input type="radio" name="q4" value="true"> quantité de matière = masse ÷ masse molaire<br>
+    <input type="radio" name="q4" value="false1"> masse = mol × volume<br>
+    <input type="radio" name="q4" value="false2"> volume = masse ÷ temps<br><br>
+
+    <label><strong>5. Quelle est la masse molaire du CO₂ ?</strong></label><br>
+    <input type="radio" name="q5" value="44"> 44 g/mol<br>
+    <input type="radio" name="q5" value="12"> 12 g/mol<br>
+    <input type="radio" name="q5" value="16"> 16 g/mol<br><br>
+
+    <label>Entrez votre prénom : <input type="text" id="prenom" /></label><br><br>
+    <button type="button" onclick="corriger()">Vérifier mes réponses</button>
+  </form>
+
+  <p id="resultat"></p>
+  <script>
+    function corriger() {
+      const explications = [
+        "1. ✅ mol est l’unité officielle de quantité de matière.",
+        "2. ✅ H=1×2 + O=16 → H₂O = 18 g/mol.",
+        "3. ✅ Une mole = 6,022 × 10²³ entités.",
+        "4. ✅ n = m ÷ M est la formule de base.",
+        "5. ✅ CO₂ = 12 (C) + 16×2 (O) = 44 g/mol."
+      ];
+      let score = 0;
+      if (document.querySelector('input[name="q1"]:checked')?.value === "mol") score++;
+      if (document.querySelector('input[name="q2"]:checked')?.value === "18") score++;
+      if (document.querySelector('input[name="q3"]:checked')?.value === "6e23") score++;
+      if (document.querySelector('input[name="q4"]:checked')?.value === "true") score++;
+      if (document.querySelector('input[name="q5"]:checked')?.value === "44") score++;
+
+      let result = "👤 " + (document.getElementById("prenom").value || "Anonyme") + "\n";
+      result += "Score : " + score + "/5\n\n";
+      for (let i = 0; i < explications.length; i++) {
+        result += explications[i] + "\n";
+      }
+      document.getElementById("resultat").innerText = result;
+    }
+  </script>
+  <br><a href="index.html">⬅ Retour au menu</a>
+</body>
+</html>

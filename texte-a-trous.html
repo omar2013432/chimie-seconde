@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Texte à trous</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Texte à trous</h1>
+  <form id="trousForm">
+    <label for="prenom">Entrez votre prénom : <input type="text" id="prenom" /></label><br><br>
+
+    <p>1. Une mole contient <input type="text" name="q1" placeholder="..."> particules.</p>
+    <p>2. La vitesse est égale à la <input type="text" name="q2" placeholder="..."> divisée par le temps.</p>
+    <p>3. Le symbole de la mole est <input type="text" name="q3" placeholder="...">.</p>
+    <p>4. En chute libre, un objet subit une <input type="text" name="q4" placeholder="..."> constante.</p>
+    <p>5. La masse molaire de H₂O est <input type="text" name="q5" placeholder="..."> g/mol.</p>
+
+    <button type="button" onclick="corriger()">Corriger</button>
+  </form>
+
+  <p id="resultat"></p>
+  <script>
+    function corriger() {
+      const reponses = ["6,022 × 10²³", "distance", "mol", "accélération", "18"];
+      const explications = [
+        "1. ✅ Une mole = 6,022 × 10²³ particules (nombre d’Avogadro).",
+        "2. ✅ v = d ÷ t, donc distance sur temps.",
+        "3. ✅ Le symbole est mol.",
+        "4. ✅ En chute libre, accélération due à la gravité.",
+        "5. ✅ H = 1×2, O = 16 → H₂O = 18 g/mol."
+      ];
+      let score = 0;
+      const inputs = document.querySelectorAll("input[type='text']");
+      for (let i = 0; i < 5; i++) {
+        if (inputs[i].value.trim().toLowerCase() === reponses[i].toLowerCase()) score++;
+      }
+
+      let result = "👤 " + (document.getElementById("prenom").value || "Anonyme") + "\n";
+      result += "Score : " + score + "/5\n\n";
+      for (let exp of explications) result += exp + "\n";
+      document.getElementById("resultat").innerText = result;
+    }
+  </script>
+  <br><a href="index.html">⬅ Retour au menu</a>
+</body>
+</html>
